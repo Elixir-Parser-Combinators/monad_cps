@@ -4,6 +4,7 @@ defmodule Control.Monad do
   defmacro __using__(_options) do
     quote do
       import unquote(__MODULE__)
+      import Control.DoNotation
     end
   end
 
