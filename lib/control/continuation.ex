@@ -8,7 +8,7 @@ defmodule Control.Continuation do
     end
   end
 
-  @cont :continuation
+  @cont :cont
 
   # Monad implementation
   def return(a) do
@@ -28,8 +28,10 @@ defmodule Control.Continuation do
     inC.(fun)
   end
 
-  # TODO implement callCC
-  
+  def call_cc(fun) do
+    cont(fn out -> run_cont(fun.(fn a -> cont(const(out.(a))) end), out) end)
+  end
+
   # Applicative implementation
   def pure(a) do
     return(a)
@@ -45,7 +47,7 @@ defmodule Control.Continuation do
   end
 
   # helper functions
-  def constant(x) do
+  def const(x) do
     fn _fun -> x end
   end
 
