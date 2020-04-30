@@ -11,20 +11,20 @@ defmodule Control.Continuation do
   @cont :cont
 
   # Monad implementation
-  def return(a) do
+  defp return(a) do
     {@cont, fn fun -> fun.(a) end}
   end
 
-  def {@cont, inC} ~>> a2cb do
+  defp {@cont, inC} ~>> a2cb do
     cont(fn out -> inC.(fn a -> run_cont(a2cb.(a), out) end) end)
   end
 
   # Monad implementation, helpers
-  def cont(fun) do
+  defp cont(fun) do
     {@cont, fun}
   end
 
-  def run_cont({@cont, inC}, fun) do
+  defp run_cont({@cont, inC}, fun) do
     inC.(fun)
   end
 
@@ -48,10 +48,19 @@ defmodule Control.Continuation do
 
   # helper functions
   def const(x) do
-    fn _fun -> x end
+    fn _ -> x end
   end
 
   def id(x) do
     x
+  end
+
+  # injections
+  def make_ic(bind) do
+    fn m -> cont(fn fred -> bind.(m, fred) end) end
+  end
+
+  def make_run(return) do
+    fn m -> run_cont(m, return) end
   end
 end
