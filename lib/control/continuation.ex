@@ -11,11 +11,11 @@ defmodule Control.Continuation do
   @cont :cont
 
   # Monad implementation
-  defp return(a) do
+  def return(a) do
     {@cont, fn fun -> fun.(a) end}
   end
 
-  defp {@cont, inC} ~>> a2cb do
+  def {@cont, inC} ~>> a2cb do
     cont(fn out -> inC.(fn a -> run_cont(a2cb.(a), out) end) end)
   end
 
