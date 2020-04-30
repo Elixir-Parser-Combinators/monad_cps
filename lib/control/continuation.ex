@@ -11,7 +11,7 @@ defmodule Control.Continuation do
   @cont :cont
 
   # Monad implementation
-  def return(a) do
+  defp return(a) do
     {@cont, fn fun -> fun.(a) end}
   end
 
