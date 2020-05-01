@@ -7,7 +7,6 @@ defmodule Control.DoNotation do
     end
   end
 
-  #  TODO implement nesting
   defmacro monad(do: block) do
     parse_ast(block)
   end
