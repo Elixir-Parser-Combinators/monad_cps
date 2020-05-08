@@ -47,6 +47,10 @@ defmodule Control.Continuation do
   end
 
   # helper functions
+  def ca >>> cb do
+    ca ~>> fn _ -> cb end
+  end
+
   def const(x) do
     fn _ -> x end
   end
