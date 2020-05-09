@@ -41,7 +41,7 @@ defmodule Control.DoNotation do
       fn next ->
         fun.(
           quote do
-            unquote(line) >>> unquote(next)
+            unquote(line) ~>> fn _ -> unquote(next) end
           end
         )
       end,
