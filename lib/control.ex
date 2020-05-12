@@ -1,18 +1,8 @@
-defmodule Control do
-  @moduledoc """
-  Documentation for `Control`.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Control.hello()
-      :world
-
-  """
-  def hello do
-    :world
+defmodule ContinuationMonad do
+  defmacro __using__(_options) do
+    quote do
+      import Control.Continuation
+      import Control.DoNotation
+    end
   end
 end

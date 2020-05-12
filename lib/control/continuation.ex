@@ -1,13 +1,6 @@
 defmodule Control.Continuation do
   @moduledoc false
 
-  defmacro __using__(_options) do
-    quote do
-      import unquote(__MODULE__)
-      use Control.DoNotation
-    end
-  end
-
   @cont :cont
 
   # Monad implementation
