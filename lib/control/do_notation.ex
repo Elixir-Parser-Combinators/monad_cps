@@ -1,12 +1,19 @@
 defmodule Control.DoNotation do
-  @moduledoc false
+  @moduledoc """
+  This module provides the "monad do ... end" macro.
+  """
 
-  defmacro __using__(_options) do
-    quote do
-      import unquote(__MODULE__)
-    end
+
+  @doc """
+  This macro provides "do notation" syntax.
+  ```
+  monad do
+    x <- return(23)
+    y <- return(99)
+    return(x + y)
   end
-
+  ```
+  """
   defmacro monad(do: block) do
     parse_ast(block)
   end
