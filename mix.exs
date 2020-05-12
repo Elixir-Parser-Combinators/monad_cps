@@ -19,7 +19,9 @@ defmodule Control.MixProject do
   end
 
   defp deps do
-    []
+    [
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
+    ]
   end
 
   defp description() do
@@ -27,20 +29,13 @@ defmodule Control.MixProject do
     This project provides the equivalent of a Monad Typeclass similar to Haskell.
     The main difference though is that the typeclass is not abstract but the continuation monad.
 
-    Any other monad can be expressed using the continuation monad by first defining the *bind* and *return*
-    specific to the data type that constitutes the monad and then using 2 provided functions to *wrap* those
-    bind and return functions in their continuation monad counterparts.
-
-    Do Notation for convenience is provided via a macro defined in the Control.DoNotation module.
-
     An example monad for the Maybe type in the README.
     """
   end
 
   defp package() do
     [
-      files: ~w(lib priv .formatter.exs mix.exs README* readme* LICENSE*
-                license* CHANGELOG* changelog* src),
+      files: ~w(lib .formatter.exs mix.exs README* LICENSE* CHANGELOG*),
       licenses: ["Apache-2.0"],
       links: %{"GitHub" => "https://github.com/guenni68/monad_cps.git"}
     ]
