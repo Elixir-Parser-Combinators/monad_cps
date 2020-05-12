@@ -3,7 +3,6 @@ defmodule Control.DoNotation do
   This module provides the "monad do ... end" macro.
   """
 
-
   @doc """
   This macro provides "do notation" syntax.
   ```
