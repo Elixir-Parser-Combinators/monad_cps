@@ -70,7 +70,7 @@ defmodule Control.Continuation do
 
   # Monad implementation
   defp return(a) do
-    {@cont, fn fun -> fun.(a) end}
+    fn fun -> fun.(a) end
   end
 
   @doc """
@@ -79,8 +79,8 @@ defmodule Control.Continuation do
   Monad a >>= \a -> Monad b
   ```
   """
-  def {@cont, inC} ~>> a2cb do
-    cont(fn out -> inC.(fn a -> run_cont(a2cb.(a), out) end) end)
+  def inC ~>> a2cb do
+    fn out -> inC.(fn a -> run_cont(a2cb.(a), out) end) end
   end
 
   @doc """
@@ -91,11 +91,7 @@ defmodule Control.Continuation do
   end
 
   # Monad implementation, helpers
-  defp cont(fun) do
-    {@cont, fun}
-  end
-
-  defp run_cont({@cont, inC}, fun) do
+  defp run_cont(inC, fun) do
     inC.(fun)
   end
 
@@ -103,7 +99,7 @@ defmodule Control.Continuation do
   allows for early exits.
   """
   def call_cc(fun) do
-    cont(fn out -> run_cont(fun.(fn a -> cont(const(out.(a))) end), out) end)
+    fn out -> run_cont(fun.(fn a -> const(out.(a)) end), out) end
   end
 
   # Applicative implementation
@@ -149,7 +145,7 @@ defmodule Control.Continuation do
   This functions produces a "lift" function, that lifts the monad instances into the continuation monad.
   """
   def make_ic(bind) do
-    fn m -> cont(fn fred -> bind.(m, fred) end) end
+    fn m -> fn fred -> bind.(m, fred) end end
   end
 
   @doc """
